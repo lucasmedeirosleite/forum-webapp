@@ -25,7 +25,9 @@ export default class CentralizedContainer extends Component {
                       {this.props.description}
                     </p>
 
-                    {this.props.children}
+                    <div className="children-content">
+                      {this.props.children}
+                    </div>
                   </div>
                 </section>
               </div>
