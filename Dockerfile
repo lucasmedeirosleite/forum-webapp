@@ -16,5 +16,5 @@ RUN yarn install
 EXPOSE 4000
 EXPOSE 35729
 
-ENTRYPOINT ["/bin/bash", "/forum-webapp/scripts/start"]
+ENTRYPOINT ["/bin/bash", "/forum-webapp/scripts/start.sh"]
 CMD ["start"]
