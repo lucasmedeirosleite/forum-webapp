@@ -32,7 +32,7 @@ describe('UserSession', () => {
 
       beforeEach(() => {
         mockedAxios
-          .onPost(`${apiClient.host}/users/sign_in`, { user: params })
+          .onPost('/users/sign_in', { user: params })
           .reply(401, expectedResponse);
       });
 
@@ -57,7 +57,7 @@ describe('UserSession', () => {
         };
 
         mockedAxios
-          .onPost(`${apiClient.host}/users/sign_in`, { user: params })
+          .onPost('/users/sign_in', { user: params })
           .reply(200, expectedResponse, expectedHeaders);
       })
 
@@ -98,7 +98,7 @@ describe('UserSession', () => {
         localStorage.setItem('current_user', JSON.stringify(user));
 
         mockedAxios
-          .onDelete(`${apiClient.host}/users/sign_out`)
+          .onDelete('/users/sign_out')
           .reply(500);
       });
 
@@ -117,7 +117,7 @@ describe('UserSession', () => {
         localStorage.setItem('current_user', JSON.stringify(user));
 
         mockedAxios
-          .onDelete(`${apiClient.host}/users/sign_out`)
+          .onDelete('/users/sign_out')
           .reply(204);
       });
 

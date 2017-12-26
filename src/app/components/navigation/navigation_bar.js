@@ -25,7 +25,7 @@ export default class NavigationBar extends Component {
             <SearchBar />
 
             <ul className="nav navbar-nav pull-xs-right">
-              <AccountBox />
+              <AccountBox history={this.props.history} />
             </ul>
           </div>
         </div>

@@ -5,7 +5,7 @@ export default class AppContainer extends Component {
   render() {
     return (
       <div>
-        <NavigationBar />
+        <NavigationBar history={this.props.history} />
 
         {this.props.children}
       </div>

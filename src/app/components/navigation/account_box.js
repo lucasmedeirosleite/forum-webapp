@@ -2,10 +2,19 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-export default class AccountBox extends Component {
+import { signOut } from '../../redux/actions/index';
+
+class AccountBox extends Component {
   onSignOut(event) {
-    event.preventDefault();
-    alert('Sign out!');
+    this.props.signOut(() => {
+      this.props.history.push('/users/sign_in');
+    }, (error) => {
+      if (error.success) {
+        this.props.history.push('/users/sign_in');
+      } else {
+        alert('Unable to sign out user');
+      }
+    });
   }
 
   render() {
@@ -18,3 +27,5 @@ export default class AccountBox extends Component {
     );
   }
 }
+
+export default connect(null, { signOut })(AccountBox);

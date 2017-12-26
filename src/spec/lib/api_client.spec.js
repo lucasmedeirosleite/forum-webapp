@@ -36,7 +36,7 @@ describe('APIClient', () => {
         }
 
         mockedAxios
-          .onPost(`${apiClient.host}/users`)
+          .onPost('/users')
           .reply(422, expectedResponse);
       });
 
@@ -53,7 +53,7 @@ describe('APIClient', () => {
         params = { message: 'a message' };
 
         mockedAxios
-          .onPost(`${apiClient.host}/inexistent-route`)
+          .onPost('/inexistent-route')
           .reply(404);
       });
 
@@ -69,7 +69,7 @@ describe('APIClient', () => {
         params = { message: 'a message' };
 
         mockedAxios
-          .onPost(`${apiClient.host}/topics`)
+          .onPost('/topics')
           .reply(401);
       });
 
@@ -86,7 +86,7 @@ describe('APIClient', () => {
         params = { message: 'a message' };
 
         mockedAxios
-          .onPost(`${apiClient.host}/topics/1/posts`)
+          .onPost('/topics/1/posts')
           .reply(500);
       });
 
@@ -115,7 +115,7 @@ describe('APIClient', () => {
         }
 
         mockedAxios
-          .onPost(`${apiClient.host}/users`)
+          .onPost('/users', params)
           .reply(201, expectedResponse);
       });
 
@@ -138,7 +138,7 @@ describe('APIClient', () => {
         }
 
         mockedAxios
-          .onDelete(`${apiClient.host}/users/sign_out`)
+          .onDelete('/users/sign_out')
           .reply(422, expectedResponse);
       });
 
@@ -152,7 +152,7 @@ describe('APIClient', () => {
     describe('when deleting to a non existing resource', () => {
       beforeEach(() => {
         mockedAxios
-          .onDelete(`${apiClient.host}/inexistent-route`)
+          .onDelete('/inexistent-route')
           .reply(404);
       });
 
@@ -166,7 +166,7 @@ describe('APIClient', () => {
     describe('when deleting to a non authorized resource', () => {
       beforeEach(() => {
         mockedAxios
-          .onDelete(`${apiClient.host}/topics`)
+          .onDelete('/topics')
           .reply(401);
       });
 
@@ -180,7 +180,7 @@ describe('APIClient', () => {
     describe('when deleting to a resource with error', () => {
       beforeEach(() => {
         mockedAxios
-          .onDelete(`${apiClient.host}/topics/1/posts`)
+          .onDelete('/topics/1/posts')
           .reply(500);
       });
 
@@ -194,7 +194,7 @@ describe('APIClient', () => {
     describe('when deleting to a valid resource', () => {
       beforeEach(() => {
         mockedAxios
-          .onDelete(`${apiClient.host}/users`)
+          .onDelete('/users')
           .reply(204);
       });
 

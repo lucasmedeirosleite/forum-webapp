@@ -23,7 +23,7 @@ export default class UserSession {
     const params = { user: userData };
     return this.apiClient.post(`${RESOURCE}/sign_in`, params).then(response => {
       const { id, name, email } = response.data;
-      const token = response.headers['Authorization'];
+      const token = response.headers['Authorization'] || response.headers.authorization;
       const user = new User(id, name, email, token);
       this.storage.setItem('current_user', user.toJSON());
       return user;
@@ -38,7 +38,7 @@ export default class UserSession {
         this.apiClient.delete(`${RESOURCE}/sign_out`).then(() => {
           this.storage.removeItem('current_user');
           resolve(true);
-        }).catch(() => {
+        }).catch((error) => {
           reject({ success: false, message: 'Unable to sign out user' })
         });
       }
