@@ -3,8 +3,8 @@ import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import CentralizedContainer from '../../components/centralized_container';
-import Input from '../../components/input';
+import CentralizedContainer from '../../components/containers/centralized_container';
+import Input from '../../components/form/input';
 
 import SignInValidator from '../../domain/validators/users/sign_in_validator';
 import { signIn } from '../../redux/actions/index';

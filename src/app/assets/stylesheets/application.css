@@ -2740,6 +2740,7 @@ input[type="button"].btn-block {
   float: left;
   padding-top: .25rem;
   padding-bottom: .25rem;
+  margin-left: 20px;
   margin-right: 1rem;
   font-size: 1.25rem; }
   .navbar-brand:focus, .navbar-brand:hover {
@@ -10866,12 +10867,16 @@ legend {
   .navbar .deemphasize {
     font-size: 0.875rem; }
 
+.navbar-form {
+  width: 80% !important;
+}
+
 .navbar-form .form-control {
   font-size: 13px;
   padding: 0.6rem 0.85rem; }
 
 .navbar-form .input-group {
-  width: 245px; }
+  width: 100%; }
 
 .navbar-form .input-group-addon {
   color: #666; }

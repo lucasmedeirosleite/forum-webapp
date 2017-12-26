@@ -1,7 +1,7 @@
 import '../spec_helper';
 import React from 'react';
 import { mount } from 'enzyme';
-import CentralizedContainer from '../../app/components/centralized_container';
+import CentralizedContainer from '../../app/components/containers/centralized_container';
 
 describe('CentralizedContainer', () => {
   let container = mount(

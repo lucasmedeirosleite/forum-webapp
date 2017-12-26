@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import CentralizedContainer from '../../components/centralized_container';
+import CentralizedContainer from '../../components/containers/centralized_container';
 
 export default class SignUp extends Component {
   render() {
