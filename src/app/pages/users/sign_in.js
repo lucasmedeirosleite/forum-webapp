@@ -35,7 +35,9 @@ class SignIn extends Component {
                 Sign up
               </Link>
 
-              <button type="submit" className="btn btn-inverse btn-sm pull-xs-right">Sign in</button>
+              <button type="submit" className="btn btn-inverse btn-sm pull-xs-right">
+                Sign in
+              </button>
             </div>
           </div>
         </form>

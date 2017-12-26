@@ -1,9 +1,9 @@
 import { USER_SIGN_IN } from '../contants';
-import Authenticator from '../../domain/services/authenticator';
+import UserSession from '../../domain/services/user_session';
 
 export function signIn(user, onSuccess, onError) {
   return {
     type: USER_SIGN_IN,
-    payload: new Authenticator().authenticate(user).then(() => onSuccess()).catch(() => onError())
+    payload: new UserSession().signIn(user).then(() => onSuccess() ).catch(error => onError())
   };
 }

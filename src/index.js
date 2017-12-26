@@ -8,6 +8,9 @@ import { BrowserRouter } from 'react-router-dom';
 
 import App from './app/pages/app';
 import reducers from './app/redux/reducers';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
 
