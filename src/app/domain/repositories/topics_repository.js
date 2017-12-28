@@ -15,4 +15,11 @@ export default class TopicsRepository {
       });
     });
   }
+
+  create(topicParams = {}) {
+    const data = { topic: topicParams };
+    return this.apiClient.post(RESOURCE, data).then(({ data }) => {
+      return new Topic(data.id, data.title, data.description, data.user_id);
+    });
+  }
 }

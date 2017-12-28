@@ -8,25 +8,22 @@ export default class Input extends Component {
 
     return (
       <div className="form-group">
-        <input type={this.props.type} className={className} {...field.input} />
-        {touched && error ? this.renderError(error) : ''}
+        <input type={field.type} className={className} {...field.input} />
+        {touched && error ?
+          <ul className="parsley-errors-list filled">
+            <li>{error}</li>
+          </ul> : ''
+        }
       </div>
-    );
-  }
-
-  renderError(error) {
-    return(
-      <ul className="parsley-errors-list filled">
-        <li>{error}</li>
-      </ul>
     );
   }
 
   render() {
     return (
       <Field
+        type={this.props.type}
         name={this.props.name}
-        component={this.renderField.bind(this)}
+        component={this.renderField}
       />
     );
   }
