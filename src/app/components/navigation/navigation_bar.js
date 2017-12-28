@@ -1,10 +1,32 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import SearchBar from './search_bar';
-import AccountBox from './account_box';
 
-export default class NavigationBar extends Component {
+import { signOut } from '../../redux/actions/index';
+
+class NavigationBar extends Component {
+  onSignOut(event) {
+    event.preventDefault();
+
+    this.props.signOut(() => {
+      this.props.history.push('/users/sign_in');
+    }, (error) => {
+      if (error.success) {
+        this.props.history.push('/users/sign_in');
+      } else {
+        alert('Unable to sign out user');
+      }
+    });
+  }
+
+  renderSearchBar() {
+    if (this.props.onSearch) {
+      return <SearchBar onSearch={this.props.onSearch} />
+    }
+  }
+
   render() {
     return (
       <nav className="navbar navbar-dashboard">
@@ -22,10 +44,15 @@ export default class NavigationBar extends Component {
           </div>
 
           <div className="collapse navbar-collapse">
-            <SearchBar />
+            {this.renderSearchBar()}
 
             <ul className="nav navbar-nav pull-xs-right">
-              <AccountBox history={this.props.history} />
+              <li className="dropdown nav-item">
+                <Link to="/" onClick={this.onSignOut.bind(this)} className="dropdown-item">
+                  <i className="fa fa-sign-out"></i>
+                  &nbsp; Sign out
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
@@ -33,3 +60,5 @@ export default class NavigationBar extends Component {
     );
   }
 }
+
+export default connect(null, { signOut })(NavigationBar);

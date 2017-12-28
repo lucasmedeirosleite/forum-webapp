@@ -6,6 +6,10 @@ export default class APIClient {
     this.storage = storage;
   }
 
+  get(resource, params = {}) {
+    return this.httpClient.get(resource, this._config(params));
+  }
+
   post(resource, params = {}) {
     return this.httpClient.post(`/${resource}`, params, this._config());
   }
@@ -14,7 +18,14 @@ export default class APIClient {
     return this.httpClient.delete(`/${resource}`, {}, this._config());
   }
 
-  _config() {
+  _config(params = null) {
+    if (params !== null) {
+      return {
+        headers: this._headers(),
+        params
+      };
+    }
+
     return {
       headers: this._headers()
     };

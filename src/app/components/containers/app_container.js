@@ -5,9 +5,13 @@ export default class AppContainer extends Component {
   render() {
     return (
       <div>
-        <NavigationBar history={this.props.history} />
+        <NavigationBar onSearch={this.props.onSearch} history={this.props.history} />
 
-        {this.props.children}
+        <div className="content-wrap">
+          <main id="content" className="content" role="main">
+            {this.props.children}
+          </main>
+        </div>
       </div>
     );
   }
