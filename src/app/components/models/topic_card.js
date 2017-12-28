@@ -1,6 +1,18 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-export default class TopicCard extends Component {
+import { deleteTopic } from '../../redux/actions/index';
+
+class TopicCard extends Component {
+  onDelete(event) {
+    event.preventDefault();
+
+    this.props.deleteTopic(this.props.topic.id, () => {
+      this.props.history.push('/topics');
+    });
+  }
+
   render() {
     return (
       <section className="widget">
@@ -12,7 +24,9 @@ export default class TopicCard extends Component {
           <div className="widget-controls">
             <a href="/"><i className="glyphicon glyphicon-comments"></i></a>
             <a href="/"><i className="glyphicon glyphicon-edit"></i></a>
-            <a href="/" data-widgster="close"><i className="glyphicon glyphicon-remove"></i></a>
+            <Link to="/" onClick={this.onDelete.bind(this)}>
+              <i className="glyphicon glyphicon-remove"></i>
+            </Link>
           </div>
         </header>
 
@@ -23,3 +37,5 @@ export default class TopicCard extends Component {
     );
   }
 }
+
+export default connect(null, { deleteTopic })(TopicCard);

@@ -2,7 +2,8 @@ import {
   USER_SIGN_IN,
   USER_SIGN_OUT,
   LIST_TOPICS,
-  CREATE_TOPIC
+  CREATE_TOPIC,
+  DELETE_TOPIC
 } from '../contants';
 
 import UserSession from '../../domain/services/user_session';
@@ -33,5 +34,16 @@ export function createTopic(topicParams = {}, onSuccess, onError) {
   return {
     type: CREATE_TOPIC,
     payload: new TopicsRepository().create(topicParams).then(topic => onSuccess(topic)).catch(error => onError(error))
+  }
+}
+
+export function deleteTopic(id, callback) {
+  new TopicsRepository().delete(id).then(() => {
+    callback();
+  });
+
+  return {
+    type: DELETE_TOPIC,
+    payload: id
   }
 }

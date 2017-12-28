@@ -3,3 +3,4 @@ export const USER_SIGN_OUT = 'USER_SIGN_OUT';
 
 export const LIST_TOPICS  = 'LIST_TOPICS';
 export const CREATE_TOPIC = 'CREATE_TOPIC';
+export const DELETE_TOPIC = 'DELETE_TOPIC';

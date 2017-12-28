@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import AppContainer from '../../components/containers/app_container';
 import ButtonLink from '../../components/common/button_link';
 import Breadcrumb from '../../components/navigation/breadcrumb';
-import Message from '../../components/common/message';
 import Card from '../../components/common/card';
+import Message from '../../components/common/message';
 import TopicCard from '../../components/models/topic_card';
 
 import { listTopics } from '../../redux/actions/index';
@@ -22,7 +22,7 @@ class Index extends Component {
   renderTopics() {
     if (this.props.topics && this.props.topics.length) {
       return this.props.topics.map(topic => {
-        return <TopicCard key={topic.id} topic={topic} />
+        return <TopicCard key={topic.id} topic={topic} history={this.props.history} />
       });
     }
 

@@ -1,7 +1,7 @@
 import APIClient from '../../../lib/api_client';
 import Topic from '../models/topic';
 
-const RESOURCE = 'topics'
+const RESOURCE = 'topics';
 
 export default class TopicsRepository {
   constructor(apiClient = new APIClient()) {
@@ -21,5 +21,9 @@ export default class TopicsRepository {
     return this.apiClient.post(RESOURCE, data).then(({ data }) => {
       return new Topic(data.id, data.title, data.description, data.user_id);
     });
+  }
+
+  delete(topicId) {
+    return this.apiClient.delete(`${RESOURCE}/${topicId}`);
   }
 }

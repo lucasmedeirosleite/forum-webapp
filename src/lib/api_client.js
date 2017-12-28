@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const BASE_URL = process.env.REACT_APP_API_HOST;
+
 export default class APIClient {
   constructor(httpClient = axios, storage = localStorage) {
     this.httpClient = httpClient;
@@ -7,15 +9,15 @@ export default class APIClient {
   }
 
   get(resource, params = {}) {
-    return this.httpClient.get(resource, this._config(params));
+    return this.httpClient.get(`${BASE_URL}/${resource}`, this._config(params));
   }
 
   post(resource, params = {}) {
-    return this.httpClient.post(`/${resource}`, params, this._config());
+    return this.httpClient.post(`${BASE_URL}/${resource}`, params, this._config());
   }
 
   delete(resource) {
-    return this.httpClient.delete(`/${resource}`, {}, this._config());
+    return this.httpClient.delete(`${BASE_URL}/${resource}`, this._config());
   }
 
   _config(params = null) {
