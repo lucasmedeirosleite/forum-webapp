@@ -11,7 +11,12 @@ export default class TopicsRepository {
   all(term = null) {
     return this.apiClient.get(RESOURCE, { term }).then(response => {
       return response.data.map(userData => {
-        return new Topic(userData.id, userData.title, userData.description, userData.user_id);
+        return new Topic(userData.id,
+                         userData.title,
+                         userData.description,
+                         userData.date,
+                         userData.user,
+                         userData.posts_count);
       });
     });
   }

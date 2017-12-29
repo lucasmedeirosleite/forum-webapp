@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { deleteTopic } from '../../redux/actions/index';
+import { currentUser } from '../../domain/services/user_session';
 
 class TopicCard extends Component {
   onDelete(event) {
@@ -14,26 +15,50 @@ class TopicCard extends Component {
   }
 
   render() {
+    const { topic } = this.props;
+    const { title, description, date, posts, user } = topic;
+
     return (
       <section className="widget">
         <header>
           <h6>
-            {this.props.topic.title} - <span className="fw-semi-bold">Lucas Medeiros</span>
+            {title} - &nbsp;
+            <span className="fw-semi-bold">
+              {user ? user.name : ''}
+            </span>
           </h6>
 
           <div className="widget-controls">
             <a href="/"><i className="glyphicon glyphicon-comments"></i></a>
-            <Link to={`/topics/${this.props.topic.id}`} >
-              <i className="glyphicon glyphicon-edit"></i>
-            </Link>
-            <Link to="/" onClick={this.onDelete.bind(this)}>
-              <i className="glyphicon glyphicon-remove"></i>
-            </Link>
+
+            {user && user.id === currentUser().id ?
+              <Link to={`/topics/${topic.id}`} >
+                <i className="glyphicon glyphicon-edit"></i>
+              </Link> : ''
+            }
+
+            {user && user.id === currentUser().id ?
+              < Link to="/" onClick={this.onDelete.bind(this)}>
+                <i className="glyphicon glyphicon-remove"></i>
+              </Link> : ''
+            }
           </div>
         </header>
 
         <div className="widget-body">
-          {this.props.topic.description}
+          <hr />
+          {description}
+          <hr />
+          <div>
+            <span><small>{date}</small></span>
+
+            <span className="pull-xs-right">
+              <small>
+                <strong>{posts}</strong>
+              </small>
+              &nbsp; messages
+            </span>
+          </div>
         </div>
       </section>
     );
