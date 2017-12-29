@@ -4,11 +4,17 @@ import { Field } from 'redux-form';
 export default class Input extends Component {
   renderField(field) {
     const { meta: { touched, error } } = field;
+    const containerClass = `${field.containerClass ? field.containerClass : 'form-group' }`
     const className = `form-control ${touched && error ? 'parsley-error' : ''}`;
 
     return (
-      <div className="form-group">
-        <input type={field.type} className={className} {...field.input} />
+      <div className={containerClass}>
+        <input
+           type={field.type}
+           className={className}
+           placeholder={field.placeholder}
+           {...field.input} />
+
         {touched && error ?
           <ul className="parsley-errors-list filled">
             <li>{error}</li>
@@ -23,6 +29,8 @@ export default class Input extends Component {
       <Field
         type={this.props.type}
         name={this.props.name}
+        containerClass={this.props.containerClass}
+        placeholder={this.props.placeholder}
         component={this.renderField}
       />
     );

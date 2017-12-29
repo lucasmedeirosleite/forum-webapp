@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -16,10 +17,18 @@ class TopicCard extends Component {
 
   render() {
     const { topic } = this.props;
-    const { title, description, date, posts, user } = topic;
+    const { id, title, description, date, posts, user } = topic;
+
+    let postsCount = 0;
+
+    if (posts && _.isArray(posts)) {
+      postsCount = posts.length
+    } else if (posts && _.isInteger(posts)) {
+      postsCount = posts;
+    }
 
     return (
-      <section className="widget">
+      <section key={id} className="widget">
         <header>
           <h6>
             {title} - &nbsp;
@@ -29,7 +38,9 @@ class TopicCard extends Component {
           </h6>
 
           <div className="widget-controls">
-            <a href="/"><i className="glyphicon glyphicon-comments"></i></a>
+            <Link to={`/topics/${topic.id}/posts`}>
+              <i className="glyphicon glyphicon-comments"></i>
+            </Link>
 
             {user && user.id === currentUser().id ?
               <Link to={`/topics/${topic.id}`} >
@@ -54,9 +65,9 @@ class TopicCard extends Component {
 
             <span className="pull-xs-right">
               <small>
-                <strong>{posts}</strong>
+                <strong>{postsCount}</strong>
               </small>
-              &nbsp; messages
+              &nbsp; posts
             </span>
           </div>
         </div>

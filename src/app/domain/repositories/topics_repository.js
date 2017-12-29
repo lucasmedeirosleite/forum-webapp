@@ -23,21 +23,36 @@ export default class TopicsRepository {
 
   find(id) {
     return this.apiClient.get(`${RESOURCE}/${id}`).then(({ data }) => {
-      return new Topic(data.id, data.title, data.description, data.user_id);
+      return new Topic(data.id,
+                       data.title,
+                       data.description,
+                       data.date,
+                       data.user,
+                       data.posts);
     });
   }
 
   create(topicParams = {}) {
     const data = { topic: topicParams };
     return this.apiClient.post(RESOURCE, data).then(({ data }) => {
-      return new Topic(data.id, data.title, data.description, data.user_id);
+      return new Topic(data.id,
+                       data.title,
+                       data.description,
+                       data.date,
+                       data.user,
+                       data.posts);
     });
   }
 
   update(id, topicParams = {}) {
     const data = { topic: topicParams }
     return this.apiClient.patch(`${RESOURCE}/${id}`, data).then(({data}) => {
-      return new Topic(data.id, data.title, data.description, data.user_id);
+      return new Topic(data.id,
+                       data.title,
+                       data.description,
+                       data.date,
+                       data.user,
+                       data.posts);
     });
   }
 

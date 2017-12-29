@@ -6,11 +6,13 @@ import {
   FETCH_TOPIC,
   CREATE_TOPIC,
   UPDATE_TOPIC,
-  DELETE_TOPIC
+  DELETE_TOPIC,
+  CREATE_POST
 } from '../constants';
 
 import UserSession from '../../domain/services/user_session';
 import TopicsRepository from '../../domain/repositories/topics_repository';
+import PostsRepository from '../../domain/repositories/posts_repository';
 
 export function signIn(user, onSuccess, onError) {
   return {
@@ -81,5 +83,20 @@ export function deleteTopic(id, callback) {
   return {
     type: DELETE_TOPIC,
     payload: id
+  }
+}
+
+export function createPost(topicId, postParams = {}, onSuccess, onError) {
+  return {
+    type: CREATE_POST,
+    payload: new PostsRepository()
+      .createFrom(topicId, postParams)
+      .then(post => {
+        onSuccess(post);
+        return post;
+      }).catch(error => {
+        onError(error);
+        return error;
+      })
   }
 }
