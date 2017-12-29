@@ -1,8 +1,9 @@
 import _ from 'lodash';
 
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 
+import BasePage from '../../components/common/base_page';
 import AppContainer from '../../components/containers/app_container';
 import Breadcrumb from '../../components/navigation/breadcrumb';
 import Message from '../../components/common/message';
@@ -10,7 +11,7 @@ import TopicCard from '../../components/models/topic_card';
 
 import { listTopics } from '../../redux/actions/index';
 
-class Index extends Component {
+class Index extends BasePage {
   componentDidMount() {
     this.props.listTopics();
   }

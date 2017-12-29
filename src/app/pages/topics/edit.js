@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
+
+import BasePage from '../../components/common/base_page';
 
 import Form from './form';
 import { fetchTopic, updateTopic } from '../../redux/actions/index';
 
-class Edit extends Component {
+class Edit extends BasePage {
   componentDidMount() {
     const { id } = this.props.match.params;
     this.props.fetchTopic(id);

@@ -1,14 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+import BasePage from '../../components/common/base_page';
 import AppContainer from '../../components/containers/app_container';
 import Breadcrumb from '../../components/navigation/breadcrumb';
 import TopicPostsCard from '../../components/models/topic_posts_card';
 
 import { fetchTopic, createPost } from '../../redux/actions';
 
-class Index extends Component {
+class Index extends BasePage {
   componentDidMount() {
     const { id } = this.props.match.params;
     this.props.fetchTopic(id);

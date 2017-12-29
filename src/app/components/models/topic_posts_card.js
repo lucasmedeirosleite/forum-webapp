@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import moment from 'moment';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -18,6 +19,7 @@ export default class TopicPostsCard extends Component {
 
   render() {
     const { title, description, user, date, posts } = this.props.topic;
+    const formattedDate = moment.utc(date, 'YYYY-MM-DD HH:mm:ss').fromNow();
 
     return(
       <section className="event">
@@ -29,7 +31,7 @@ export default class TopicPostsCard extends Component {
           <small>&nbsp;-&nbsp;{user ? user.name : ''}</small>
         </h5>
 
-        <p className="text-muted">{date}</p>
+        <p className="text-muted">{formattedDate}</p>
 
         <p>
           {description}

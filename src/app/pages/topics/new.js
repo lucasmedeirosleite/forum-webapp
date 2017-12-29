@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
+
+import BasePage from '../../components/common/base_page';
 
 import Form from './form';
 import { createTopic } from '../../redux/actions/index';
 
-class New extends Component {
+class New extends BasePage {
   onSubmit(values) {
     this.props.createTopic(values, () => {
       this.props.history.push('/topics');

@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
@@ -6,10 +7,17 @@ import { Link } from 'react-router-dom';
 import CentralizedContainer from '../../components/containers/centralized_container';
 import Input from '../../components/form/input';
 
+import { currentUser } from '../../domain/services/user_session';
 import SignInValidator from '../../domain/validators/users/sign_in_validator';
 import { signIn } from '../../redux/actions/index';
 
 class SignIn extends Component {
+  componentWillMount() {
+    if (!_.isEmpty(currentUser())) {
+      this.props.history.push('/');
+    }
+  }
+
   onSubmit(values) {
     this.props.signIn(values, () => {
       this.props.history.push('/');

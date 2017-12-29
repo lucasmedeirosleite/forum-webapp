@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom';
@@ -21,6 +22,7 @@ class PostLine extends Component {
 
   render() {
     const { description, date, user } = this.props.post;
+    const formattedDate = moment.utc(date, 'YYYY-MM-DD HH:mm:ss').fromNow();
     const loggedUser = currentUser();
 
     return (
@@ -30,7 +32,7 @@ class PostLine extends Component {
         </span>
 
         <div className="comment-body">
-          <h6 className="author fw-semi-bold fs-sm">{user ? user.name : ''} <small>{date}</small></h6>
+          <h6 className="author fw-semi-bold fs-sm">{user ? user.name : ''} <small>{formattedDate}</small></h6>
 
           {user && loggedUser && user.id === loggedUser.id ?
             <Link to="/" onClick={this.onDelete.bind(this)} className="remove-topic-button pull-xs-right">
