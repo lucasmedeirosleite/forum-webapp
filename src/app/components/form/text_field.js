@@ -13,11 +13,12 @@ export default class TextField extends Component {
         </label>
 
         <div className="col-md-10">
-          <input type="text"
-                 id={field.id}
-                 placeholder={field.placeholder}
-                 className={className}
-                 {...field.input} />
+          <input
+            id={field.id}
+            className={className}
+            placeholder={field.placeholder}
+            type="text"
+            {...field.input} />
 
           {touched && error ?
             <ul className="parsley-errors-list filled">

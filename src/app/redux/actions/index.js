@@ -2,7 +2,9 @@ import {
   USER_SIGN_IN,
   USER_SIGN_OUT,
   LIST_TOPICS,
+  FETCH_TOPIC,
   CREATE_TOPIC,
+  UPDATE_TOPIC,
   DELETE_TOPIC
 } from '../contants';
 
@@ -30,10 +32,30 @@ export function listTopics(term = null) {
   }
 }
 
+export function fetchTopic(id) {
+  return {
+    type: FETCH_TOPIC,
+    payload: new TopicsRepository().find(id)
+  }
+}
+
 export function createTopic(topicParams = {}, onSuccess, onError) {
   return {
     type: CREATE_TOPIC,
-    payload: new TopicsRepository().create(topicParams).then(topic => onSuccess(topic)).catch(error => onError(error))
+    payload: new TopicsRepository()
+      .create(topicParams)
+      .then(topic => onSuccess(topic))
+      .catch(error => onError(error))
+  }
+}
+
+export function updateTopic(id, topicParams = {}, onSuccess, onError) {
+  return {
+    type: UPDATE_TOPIC,
+    payload: new TopicsRepository()
+      .update(id, topicParams)
+      .then(topic => onSuccess(topic))
+      .catch(error => onError(error))
   }
 }
 

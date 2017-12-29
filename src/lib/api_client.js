@@ -16,6 +16,10 @@ export default class APIClient {
     return this.httpClient.post(`${BASE_URL}/${resource}`, params, this._config());
   }
 
+  patch(resource, params = {}) {
+    return this.httpClient.patch(`${BASE_URL}/${resource}`, params, this._config());
+  }
+
   delete(resource) {
     return this.httpClient.delete(`${BASE_URL}/${resource}`, this._config());
   }

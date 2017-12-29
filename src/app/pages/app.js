@@ -8,12 +8,14 @@ import SignIn from './users/sign_in';
 import SignUp from './users/sign_up';
 import TopicsIndex from './topics/index';
 import TopicsNew from './topics/new';
+import TopicsEdit from './topics/edit';
 
 export default class App extends Component {
   render() {
     return (
       <Switch>
         <Route path="/topics/new" component={TopicsNew} />
+        <Route path="/topics/:id" component={TopicsEdit} />
         <Route path="/topics" component={TopicsIndex} />
         <Route path="/users/sign_in" component={SignIn} />
         <Route path="/users/sign_up" component={SignUp} />

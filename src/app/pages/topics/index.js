@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
@@ -20,15 +22,15 @@ class Index extends Component {
   }
 
   renderTopics() {
-    if (this.props.topics && this.props.topics.length) {
-      return this.props.topics.map(topic => {
-        return <TopicCard key={topic.id} topic={topic} history={this.props.history} />
-      });
+    if (_.isEmpty(this.props.topics)) {
+      return (
+        <Message type="warning" text="No topics yet, please add one." />
+      );
     }
 
-    return (
-      <Message type="warning" text="No topics yet, please add one." />
-    );
+    return _.map(this.props.topics, topic => {
+      return <TopicCard key={topic.id} topic={topic} history={this.props.history} />
+    });
   }
 
   render() {

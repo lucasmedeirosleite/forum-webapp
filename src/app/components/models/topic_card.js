@@ -23,7 +23,9 @@ class TopicCard extends Component {
 
           <div className="widget-controls">
             <a href="/"><i className="glyphicon glyphicon-comments"></i></a>
-            <a href="/"><i className="glyphicon glyphicon-edit"></i></a>
+            <Link to={`/topics/${this.props.topic.id}`} >
+              <i className="glyphicon glyphicon-edit"></i>
+            </Link>
             <Link to="/" onClick={this.onDelete.bind(this)}>
               <i className="glyphicon glyphicon-remove"></i>
             </Link>
