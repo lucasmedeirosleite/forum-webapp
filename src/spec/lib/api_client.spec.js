@@ -36,7 +36,7 @@ describe('APIClient', () => {
         }
 
         mockedAxios
-          .onPost('/users')
+          .onPost(`${apiClient.host}/users`)
           .reply(422, expectedResponse);
       });
 
@@ -53,7 +53,7 @@ describe('APIClient', () => {
         params = { message: 'a message' };
 
         mockedAxios
-          .onPost('/inexistent-route')
+          .onPost(`${apiClient.host}/inexistent-route`)
           .reply(404);
       });
 
@@ -69,7 +69,7 @@ describe('APIClient', () => {
         params = { message: 'a message' };
 
         mockedAxios
-          .onPost('/topics')
+          .onPost(`${apiClient.host}/topics`)
           .reply(401);
       });
 
@@ -86,7 +86,7 @@ describe('APIClient', () => {
         params = { message: 'a message' };
 
         mockedAxios
-          .onPost('/topics/1/posts')
+          .onPost(`${apiClient.host}/topics/1/posts`)
           .reply(500);
       });
 
@@ -115,7 +115,7 @@ describe('APIClient', () => {
         }
 
         mockedAxios
-          .onPost('/users', params)
+          .onPost(`${apiClient.host}/users`, params)
           .reply(201, expectedResponse);
       });
 
@@ -138,7 +138,7 @@ describe('APIClient', () => {
         }
 
         mockedAxios
-          .onDelete('/users/sign_out')
+          .onDelete(`${apiClient.host}/users/sign_out`)
           .reply(422, expectedResponse);
       });
 
@@ -152,7 +152,7 @@ describe('APIClient', () => {
     describe('when deleting to a non existing resource', () => {
       beforeEach(() => {
         mockedAxios
-          .onDelete('/inexistent-route')
+          .onDelete(`${apiClient.host}/inexistent-route`)
           .reply(404);
       });
 
@@ -166,7 +166,7 @@ describe('APIClient', () => {
     describe('when deleting to a non authorized resource', () => {
       beforeEach(() => {
         mockedAxios
-          .onDelete('/topics')
+          .onDelete(`${apiClient.host}/topics`)
           .reply(401);
       });
 
@@ -180,7 +180,7 @@ describe('APIClient', () => {
     describe('when deleting to a resource with error', () => {
       beforeEach(() => {
         mockedAxios
-          .onDelete('/topics/1/posts')
+          .onDelete(`${apiClient.host}/topics/1/posts`)
           .reply(500);
       });
 
@@ -194,13 +194,73 @@ describe('APIClient', () => {
     describe('when deleting to a valid resource', () => {
       beforeEach(() => {
         mockedAxios
-          .onDelete('/users')
+          .onDelete(`${apiClient.host}/users`)
           .reply(204);
       });
 
       it('returns 204', () => {
         return apiClient.delete('users').then(response => {
           expect(response.status).toEqual(204);
+        });
+      });
+    });
+  });
+
+  describe('#get', () => {
+    let expectedResponse;
+
+    describe('when getting to a non existing resource', () => {
+      beforeEach(() => {
+        mockedAxios
+          .onGet(`${apiClient.host}/inexistent-route`)
+          .reply(404);
+      });
+
+      it('returns 404', () => {
+        return apiClient.get('inexistent-route').catch(error => {
+          expect(error.response.status).toEqual(404);
+        });
+      });
+    });
+
+    describe('when getting to a non authorized resource', () => {
+      beforeEach(() => {
+        mockedAxios
+          .onGet(`${apiClient.host}/topics`)
+          .reply(401);
+      });
+
+      it('returns 401', () => {
+        return apiClient.get('topics').catch(error => {
+          expect(error.response.status).toEqual(401);
+        });
+      });
+    });
+
+    describe('when getting to a resource with error', () => {
+      beforeEach(() => {
+        mockedAxios
+          .onGet(`${apiClient.host}/topics/1/posts`)
+          .reply(500);
+      });
+
+      it('returns 500', () => {
+        return apiClient.get('topics/1/posts').catch(error => {
+          expect(error.response.status).toEqual(500);
+        });
+      });
+    });
+
+    describe('when getting to a valid resource', () => {
+      beforeEach(() => {
+        mockedAxios
+          .onGet(`${apiClient.host}/users`)
+          .reply(200);
+      });
+
+      it('returns 200', () => {
+        return apiClient.get('users').then(response => {
+          expect(response.status).toEqual(200);
         });
       });
     });

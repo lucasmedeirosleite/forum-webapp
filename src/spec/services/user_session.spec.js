@@ -18,6 +18,10 @@ describe('UserSession', () => {
     token: '1234-5678'
   }
 
+  beforeEach(() => {
+    mockedAxios.reset();
+  });
+
   describe('#singIn', () => {
     const params = {
       email: 'user@example.com',
@@ -32,7 +36,7 @@ describe('UserSession', () => {
 
       beforeEach(() => {
         mockedAxios
-          .onPost('/users/sign_in', { user: params })
+          .onPost(`${apiClient.host}/users/sign_in`, { user: params })
           .reply(401, expectedResponse);
       });
 
@@ -48,8 +52,6 @@ describe('UserSession', () => {
       let expectedHeaders = { Authorization: 'Bearer application-token' };
 
       beforeEach(() => {
-        mockedAxios.reset();
-
         expectedResponse = {
           id: 1234,
           name: 'A user name',
@@ -57,7 +59,7 @@ describe('UserSession', () => {
         };
 
         mockedAxios
-          .onPost('/users/sign_in', { user: params })
+          .onPost(`${apiClient.host}/users/sign_in`, { user: params })
           .reply(200, expectedResponse, expectedHeaders);
       })
 
@@ -98,7 +100,7 @@ describe('UserSession', () => {
         localStorage.setItem('current_user', JSON.stringify(user));
 
         mockedAxios
-          .onDelete('/users/sign_out')
+          .onDelete(`${apiClient.host}/users/sign_out`)
           .reply(500);
       });
 
@@ -112,12 +114,10 @@ describe('UserSession', () => {
 
     describe('when current user present', () => {
       beforeEach(() => {
-        mockedAxios.reset();
-
         localStorage.setItem('current_user', JSON.stringify(user));
 
         mockedAxios
-          .onDelete('/users/sign_out')
+          .onDelete(`${apiClient.host}/users/sign_out`)
           .reply(204);
       });
 

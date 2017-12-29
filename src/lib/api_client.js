@@ -5,23 +5,24 @@ const BASE_URL = process.env.REACT_APP_API_HOST;
 export default class APIClient {
   constructor(httpClient = axios, storage = localStorage) {
     this.httpClient = httpClient;
+    this.host = BASE_URL;
     this.storage = storage;
   }
 
   get(resource, params = {}) {
-    return this.httpClient.get(`${BASE_URL}/${resource}`, this._config(params));
+    return this.httpClient.get(`${this.host}/${resource}`, this._config(params));
   }
 
   post(resource, params = {}) {
-    return this.httpClient.post(`${BASE_URL}/${resource}`, params, this._config());
+    return this.httpClient.post(`${this.host}/${resource}`, params, this._config());
   }
 
   patch(resource, params = {}) {
-    return this.httpClient.patch(`${BASE_URL}/${resource}`, params, this._config());
+    return this.httpClient.patch(`${this.host}/${resource}`, params, this._config());
   }
 
   delete(resource) {
-    return this.httpClient.delete(`${BASE_URL}/${resource}`, this._config());
+    return this.httpClient.delete(`${this.host}/${resource}`, this._config());
   }
 
   _config(params = null) {

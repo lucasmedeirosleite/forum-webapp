@@ -1,3 +1,8 @@
+export function currentUser() {
+  return null;
+}
+
+
 export default class UserSession {
   constructor(storage = localStorage) {
     this.storage = storage;
