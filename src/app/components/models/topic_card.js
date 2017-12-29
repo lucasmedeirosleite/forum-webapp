@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import moment from 'moment';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -20,7 +19,7 @@ class TopicCard extends Component {
     const { topic } = this.props;
     const { id, title, description, date, posts, user } = topic;
 
-    const formattedDate = moment.utc(date, 'YYYY-MM-DD HH:mm:ss').fromNow();
+    const formattedDate = date.fromNow();
 
     let postsCount = 0;
 

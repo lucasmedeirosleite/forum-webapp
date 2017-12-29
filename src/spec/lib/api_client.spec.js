@@ -265,4 +265,119 @@ describe('APIClient', () => {
       });
     });
   });
+
+  describe('#patch', () => {
+    let params;
+    let expectedResponse;
+
+    describe('when patching with invalid data', () => {
+      beforeEach(() => {
+        params = {
+          user: {
+            name: '',
+            email: '',
+            password: ''
+          }
+        };
+
+        expectedResponse = {
+          errors: {
+            name: 'is required',
+            email: 'is required',
+            password: 'is required'
+          }
+        }
+
+        mockedAxios
+          .onPatch(`${apiClient.host}/users/1`)
+          .reply(422, expectedResponse);
+      });
+
+      it('returns 422', () => {
+        return apiClient.patch('users/1', params).catch(error => {
+          expect(error.response.status).toEqual(422);
+          expect(error.response.data).toEqual(expectedResponse);
+        });
+      });
+    });
+
+    describe('when patching to a non existing resource', () => {
+      beforeEach(() => {
+        params = { message: 'a message' };
+
+        mockedAxios
+          .onPatch(`${apiClient.host}/inexistent-route`)
+          .reply(404);
+      });
+
+      it('returns 404', () => {
+        return apiClient.patch('inexistent-route', params).catch(error => {
+          expect(error.response.status).toEqual(404);
+        });
+      });
+    });
+
+    describe('when patching to a non authorized resource', () => {
+      beforeEach(() => {
+        params = { message: 'a message' };
+
+        mockedAxios
+          .onPatch(`${apiClient.host}/topics`)
+          .reply(401);
+      });
+
+      it('returns 401', () => {
+        expect.assertions(1);
+        return apiClient.patch('topics', params).catch(error => {
+          expect(error.response.status).toEqual(401);
+        });
+      });
+    })
+
+    describe('when patching to a resource with error', () => {
+      beforeEach(() => {
+        params = { message: 'a message' };
+
+        mockedAxios
+          .onPatch(`${apiClient.host}/topics/1/posts`)
+          .reply(500);
+      });
+
+      it('returns 500', () => {
+        expect.assertions(1);
+        return apiClient.patch('topics/1/posts', params).catch(error => {
+          expect(error.response.status).toEqual(500);
+        });
+      });
+    });
+
+    describe('when patching to a valid resource', () => {
+      beforeEach(() => {
+        params = {
+          user: {
+            name: 'A user name',
+            email: 'user@example.com',
+            password: '12345678'
+          }
+        };
+
+        expectedResponse = {
+          id: 1234,
+          name: 'A user name',
+          email: 'user@example.com'
+        }
+
+        mockedAxios
+          .onPatch(`${apiClient.host}/users`, params)
+          .reply(201, expectedResponse);
+      });
+
+      it('returns 200', () => {
+        return apiClient.patch('users', params).then(response => {
+          expect(response.status).toEqual(201);
+          expect(response.data).toEqual(expectedResponse);
+        });
+      });
+    });
+  });
 });

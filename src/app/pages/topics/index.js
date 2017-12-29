@@ -27,7 +27,9 @@ class Index extends BasePage {
       );
     }
 
-    return _.map(this.props.topics, topic => {
+    const ordered = _.orderBy(this.props.topics, ['date'], ['desc']);
+
+    return _.map(ordered, topic => {
       return <TopicCard key={topic.id} topic={topic} history={this.props.history} />
     });
   }

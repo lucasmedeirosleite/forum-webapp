@@ -81,6 +81,70 @@ describe('UserSession', () => {
     });
   });
 
+  describe('#signUp', () => {
+    const params = {
+      name: '',
+      email: '',
+      password: ''
+    };
+    let expectedResponse;
+
+    describe('when validation fails', () => {
+      expectedResponse = {
+        errors: {
+          name: ["can't be blank"],
+          email: ["can't be blank"],
+          password: ["can't be blank"],
+        }
+      };
+
+      beforeEach(() => {
+        mockedAxios
+          .onPost(`${apiClient.host}/users`, { user: params })
+          .reply(401, expectedResponse);
+      });
+
+      it('does not sign up user', () => {
+        return userSession.signUp(params).catch(({ response }) => {
+          expect(response.status).toEqual(401);
+          expect(response.data).toEqual(expectedResponse);
+        });
+      });
+    });
+
+    describe('when succeeds', () => {
+      let expectedHeaders = { Authorization: 'Bearer application-token' };
+
+      beforeEach(() => {
+        expectedResponse = {
+          id: 1234,
+          name: 'A user name',
+          email: 'user@example.com'
+        };
+
+        mockedAxios
+          .onPost(`${apiClient.host}/users`, { user: params })
+          .reply(200, expectedResponse, expectedHeaders);
+      })
+
+      it('returns the new user', () => {
+        return userSession.signUp(params).then(user => {
+          expect(user.id).toEqual(1234);
+          expect(user.name).toEqual('A user name');
+          expect(user.email).toEqual('user@example.com');
+          expect(user.token).toEqual('Bearer application-token');
+
+          const savedUser = JSON.parse(localStorage.getItem('current_user'));
+
+          expect(savedUser.id).toEqual(1234);
+          expect(savedUser.name).toEqual('A user name');
+          expect(savedUser.email).toEqual('user@example.com');
+          expect(savedUser.token).toEqual('Bearer application-token');
+        });
+      });
+    });
+  });
+
   describe('#signOut', () => {
     beforeEach(() => {
       localStorage.clear();
