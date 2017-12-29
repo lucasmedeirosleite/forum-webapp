@@ -24,6 +24,11 @@ class Index extends Component {
     });
   }
 
+  onPostDelete() {
+    const { id } = this.props.match.params;
+    this.props.fetchTopic(id);
+  }
+
   render() {
     const pageLabel = `Topic #${this.props.match.params.id} posts`;
 
@@ -40,6 +45,7 @@ class Index extends Component {
           <div className="col-lg-12">
             <TopicPostsCard
                onPostSubmit={this.onPostSubmit.bind(this)}
+               onPostDelete={this.onPostDelete.bind(this)}
                topic={this.props.topic || {}} />
           </div>
         </div>

@@ -9,3 +9,4 @@ export const UPDATE_TOPIC = 'UPDATE_TOPIC';
 export const DELETE_TOPIC = 'DELETE_TOPIC';
 
 export const CREATE_POST  = 'CREATE_POST';
+export const DELETE_POST  = 'DELETE_POST';

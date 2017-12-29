@@ -1,3 +1,4 @@
+// import _ from 'lodash';
 import { CREATE_POST } from '../constants';
 
 export default function (state = {}, action) {

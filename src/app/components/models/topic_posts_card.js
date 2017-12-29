@@ -12,7 +12,7 @@ export default class TopicPostsCard extends Component {
     }
 
     return this.props.topic.posts.map(post => {
-      return <PostLine key={post.id} post={post} />
+      return <PostLine key={post.id} post={post} onPostDelete={this.props.onPostDelete} />
     });
   }
 

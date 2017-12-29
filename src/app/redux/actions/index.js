@@ -7,7 +7,8 @@ import {
   CREATE_TOPIC,
   UPDATE_TOPIC,
   DELETE_TOPIC,
-  CREATE_POST
+  CREATE_POST,
+  DELETE_POST
 } from '../constants';
 
 import UserSession from '../../domain/services/user_session';
@@ -98,5 +99,17 @@ export function createPost(topicId, postParams = {}, onSuccess, onError) {
         onError(error);
         return error;
       })
+  }
+}
+
+export function deletePost(topicId, postId, onSuccess, onError) {
+  new PostsRepository()
+    .deleteFrom(topicId, postId)
+    .then(() => onSuccess())
+    .catch(() => onError())
+
+  return {
+    type: DELETE_POST,
+    payload: postId
   }
 }
