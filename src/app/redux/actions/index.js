@@ -1,12 +1,13 @@
 import {
   USER_SIGN_IN,
+  USER_SIGN_UP,
   USER_SIGN_OUT,
   LIST_TOPICS,
   FETCH_TOPIC,
   CREATE_TOPIC,
   UPDATE_TOPIC,
   DELETE_TOPIC
-} from '../contants';
+} from '../constants';
 
 import UserSession from '../../domain/services/user_session';
 import TopicsRepository from '../../domain/repositories/topics_repository';
@@ -14,7 +15,20 @@ import TopicsRepository from '../../domain/repositories/topics_repository';
 export function signIn(user, onSuccess, onError) {
   return {
     type: USER_SIGN_IN,
-    payload: new UserSession().signIn(user).then(() => onSuccess() ).catch(error => onError())
+    payload: new UserSession()
+      .signIn(user)
+      .then(() => onSuccess() )
+      .catch(error => onError())
+  };
+}
+
+export function signUp(user, onSuccess, onError) {
+  return {
+    type: USER_SIGN_UP,
+    payload: new UserSession()
+      .signUp(user)
+      .then(() => onSuccess())
+      .catch(error => onError())
   };
 }
 

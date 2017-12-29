@@ -1,31 +1,44 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
 
 import CentralizedContainer from '../../components/containers/centralized_container';
+import Input from '../../components/form/input';
 
-export default class SignUp extends Component {
+import SignUpValidator from '../../domain/validators/users/sign_up_validator';
+import { signUp } from '../../redux/actions/index';
+
+class SignUp extends Component {
+  onSubmit(values) {
+    this.props.signUp(values, () => {
+      this.props.history.push('/');
+    }, () => {
+      alert('Unable to create account');
+    });
+  }
+
   render() {
+    const { handleSubmit } = this.props;
+
     return (
       <CentralizedContainer title="Sign up" description="Please fill in your information.">
-        <form className="login-form mt-lg">
-          <div className="form-group">
-            <input type="text" className="form-control" placeholder="Name" />
-          </div>
+        <form onSubmit={handleSubmit(this.onSubmit.bind(this))} className="login-form mt-lg">
+          <Input type="text" name="name" placeholder="Name" />
 
-          <div className="form-group">
-            <input type="text" className="form-control" placeholder="Email" />
-          </div>
+          <Input type="email" name="email" placeholder="E-mail" />
 
-          <div className="form-group">
-            <input className="form-control" type="text" placeholder="Password" />
-          </div>
+          <Input type="password" name="password" placeholder="Password" />
 
           <div className="clearfix">
             <div className="btn-toolbar">
               <Link className="btn btn-secondary btn-sm" to="/users/sign_in">
                 Back
               </Link>
-              <a className="btn btn-inverse btn-sm pull-xs-right" href="/">Create account</a>
+
+              <button type="submit" className="btn btn-inverse btn-sm pull-xs-right">
+                Create account
+              </button>
             </div>
           </div>
         </form>
@@ -33,3 +46,10 @@ export default class SignUp extends Component {
     );
   }
 }
+
+export default connect(null, { signUp })(
+  reduxForm({
+    validate: new SignUpValidator().validate,
+    form: 'SignUpForm'
+  }
+)(SignUp));

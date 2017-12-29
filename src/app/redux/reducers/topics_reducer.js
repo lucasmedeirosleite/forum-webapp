@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { LIST_TOPICS, FETCH_TOPIC, DELETE_TOPIC } from '../contants';
+import { LIST_TOPICS, FETCH_TOPIC, DELETE_TOPIC } from '../constants';
 
 export default function (state = {}, action) {
   switch (action.type) {

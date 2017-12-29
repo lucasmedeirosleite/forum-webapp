@@ -20,14 +20,11 @@ export default class UserSession {
   }
 
   signIn(userData) {
-    const params = { user: userData };
-    return this.apiClient.post(`${RESOURCE}/sign_in`, params).then(response => {
-      const { id, name, email } = response.data;
-      const token = response.headers['Authorization'] || response.headers.authorization;
-      const user = new User(id, name, email, token);
-      this.storage.setItem('current_user', user.toJSON());
-      return user;
-    });
+    return this._sendUser(`${RESOURCE}/sign_in`, userData);
+  }
+
+  signUp(userData) {
+    return this._sendUser(RESOURCE, userData);
   }
 
   signOut() {
@@ -42,6 +39,17 @@ export default class UserSession {
           reject({ success: false, message: 'Unable to sign out user' })
         });
       }
+    });
+  }
+
+  _sendUser(resource, userData) {
+    const params = { user: userData };
+    return this.apiClient.post(resource, params).then(response => {
+      const { id, name, email } = response.data;
+      const token = response.headers['Authorization'] || response.headers.authorization;
+      const user = new User(id, name, email, token);
+      this.storage.setItem('current_user', user.toJSON());
+      return user;
     });
   }
 }

@@ -46,6 +46,14 @@ class NavigationBar extends Component {
           <div className="collapse navbar-collapse">
             {this.renderSearchBar()}
 
+            <ul className="nav navbar-nav">
+              <li className="dropdown nav-item">
+                <Link to="/topics/new" className="dropdown-item">
+                  <i className="glyphicon glyphicon-plus" /> &nbsp;  Add new topic
+                </Link>
+              </li>
+            </ul>
+
             <ul className="nav navbar-nav pull-xs-right">
               <li className="dropdown nav-item">
                 <Link to="/" onClick={this.onSignOut.bind(this)} className="dropdown-item">
