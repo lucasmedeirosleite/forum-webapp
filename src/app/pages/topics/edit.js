@@ -18,7 +18,7 @@ class Edit extends BasePage {
     this.props.updateTopic(id, values, () => {
       this.props.history.push('/topics');
     }, () => {
-      alert('Unable to create topic');
+      alert('Unable to update topic');
     });
   }
 

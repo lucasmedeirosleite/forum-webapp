@@ -3,14 +3,15 @@ import axios from 'axios';
 const BASE_URL = process.env.REACT_APP_API_HOST;
 
 export default class APIClient {
-  constructor(httpClient = axios, storage = localStorage) {
+  constructor(httpClient = axios, host = BASE_URL, storage = localStorage) {
     this.httpClient = httpClient;
-    this.host = BASE_URL;
+    this.host = host;
     this.storage = storage;
   }
 
   get(resource, params = {}) {
-    return this.httpClient.get(`${this.host}/${resource}`, this._config(params));
+    const url = `${this.host}/${resource}`;
+    return this.httpClient.get(url, this._config(params));
   }
 
   post(resource, params = {}) {
