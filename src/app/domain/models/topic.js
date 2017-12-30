@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import moment from 'moment';
 
 export default class Topic {
@@ -5,7 +6,7 @@ export default class Topic {
     this.id = id;
     this.title = title;
     this.description = description;
-    this.date = moment.utc(date, 'YYYY-MM-DD HH:mm:ss');
+    this.date = _.isEmpty(date) ? '' : moment.utc(date, 'YYYY-MM-DD HH:mm:ss');
     this.user = user;
     this.posts = posts;
   }
